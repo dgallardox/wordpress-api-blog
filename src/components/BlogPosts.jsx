@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
 import searchFilter from "../utils/searchFilter";
-import { getAllPosts } from "../queries/queries";
+import { getAllPosts } from "../services/queries";
 
 export default function BlogPosts() {
   const [allPosts, setAllPosts] = useState([]);
@@ -20,6 +20,7 @@ export default function BlogPosts() {
 
   return (
     <>
+      {/* https://legacy.reactjs.org/docs/context.html */}
       <form>
         <input
           id='searchBox'
