@@ -1,51 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
-
-const API_ENDPOINT = process.env.REACT_APP_API;
-const numberOfPosts = 48;
+import searchFilter from "../utils/searchFilter";
+import { getAllPosts } from "../queries/queries";
 
 export default function BlogPosts() {
   const [allPosts, setAllPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const getPosts = async () => {
-      const res = await fetch(
-        `${API_ENDPOINT}/posts/?per_page=${numberOfPosts}`
-      );
-      const postsData = await res.json();
-      setAllPosts(postsData);
-      setFilteredPosts(postsData);
+    const fetchPostsData = async () => {
+      const res = await getAllPosts();
+      setAllPosts(res);
+      setFilteredPosts(res);
     };
-    getPosts();
+    fetchPostsData()
   }, []);
 
-  function handleSearch() {
-    const filteredResults = allPosts.filter((post) =>
-      post.title.rendered.includes(search)
-    );
-    setFilteredPosts(filteredResults);
-  }
 
   return (
     <>
-        <form>
-          <input
-            id='searchBox'
-            value={search}
-            placeholder='Seach...'
-            onChange={(e) => {
-              setSearch(e.currentTarget.value);
-              handleSearch();
-            }}
-          />
-        </form>
+      <form>
+        <input
+          id='searchBox'
+          placeholder='Seach...'
+          onChange={(e) => {
+            const updatedSearch = e.currentTarget.value;
+            const filteredPosts = searchFilter(allPosts, updatedSearch);
+            setFilteredPosts(filteredPosts);
+          }}
+        />
+      </form>
 
       <div className='postGrid'>
         {filteredPosts.map((post) => (
-          <div className='postItem'>
+          <div className='postItem' key={post.id}>
             <Link to={`posts/${post.slug}`}>
               <img src={post.featured_image_src} alt='Featured' />
               <h4>{post.title.rendered}</h4>

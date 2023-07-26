@@ -2,20 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
-
-const API_ENDPOINT = process.env.REACT_APP_API;
+import { getSinglePost } from "../queries/queries";
 
 export default function PostDetails() {
   const { slug } = useParams();
   const [singlePost, setSinglePost] = useState([]);
 
   useEffect(() => {
-    const getPost = async () => {
-      const res = await fetch(`${API_ENDPOINT}/posts?slug=${slug}`);
-      const postData = await res.json();
-      setSinglePost(postData);
+    const fetchPostData = async () => {
+      const res = await getSinglePost(slug)
+      setSinglePost(res);
     };
-    getPost();
+    fetchPostData()
   });
 
   return (
