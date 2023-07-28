@@ -1,0 +1,34 @@
+.createPostForm {
+  margin-top: 50px;
+}
+
+#postTitle {
+  width: 50%;
+  border: none;
+  margin: 10px 0;
+  padding: 6px;
+  font-size: xx-large;
+  font-weight: 600;
+}
+
+textarea {
+  height: 400px;
+  resize: none;
+  width: 50%;
+  padding: 6px;
+  border: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size:medium
+}
+
+#submitButton {
+  width: 50%;
+  height: 30px;
+  border: none;
+  font-size: large;
+  font-weight: 300;
+}

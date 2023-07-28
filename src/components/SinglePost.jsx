@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import formatDate from "../utils/formatDate";
 import { getSinglePost } from "../services/queries";
+import { deletePost } from "../services/queries";
 
 export default function SinglePost() {
   const { slug } = useParams();
@@ -31,6 +31,16 @@ export default function SinglePost() {
             <p>{formatDate(post.date)}</p>
             <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
           </div>
+          <button>Edit</button>
+          <Link to={"/"}>
+            <button
+              onClick={() => {
+                deletePost(post.id);
+              }}
+            >
+              Delete
+            </button>
+          </Link>
         </div>
       ))}
     </>

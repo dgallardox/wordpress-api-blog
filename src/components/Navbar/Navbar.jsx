@@ -9,9 +9,9 @@ export default function Navbar() {
       <Link to='/'>
         <h2>WordPress API Blog</h2>
       </Link>
-      <ul id='navItem'>
+      <ul id='navList'>
         <Link to='/create-post'>
-          <li>Create post</li>
+          <li id='navItem'>Create post</li>
         </Link>
       </ul>
     </div>
