@@ -1,63 +1,57 @@
+import axios from "axios";
+
 const API_ENDPOINT = process.env.REACT_APP_API;
-const numberOfPosts = 48;
+const USERNAME = process.env.REACT_APP_USERNAME;
+const PASSWORD = process.env.REACT_APP_PASSWORD;
+
+const numberOfPosts = 24;
 
 export const getAllPosts = async () => {
   try {
-    const res = await fetch(`${API_ENDPOINT}/posts/?per_page=${numberOfPosts}`);
-    const allPostsData = await res.json();
-    return allPostsData;
+    const response = await axios(
+      `${API_ENDPOINT}/posts/?per_page=${numberOfPosts}`
+    );
+    const products = response.data;
+    return products;
   } catch (error) {
-    return []
-    throw error
+    throw error;
   }
 };
 
 export const getSinglePost = async (slug) => {
   try {
-  const res = await fetch(`${API_ENDPOINT}/posts?slug=${slug}`);
-  const singlePostData = await res.json();
-  return singlePostData;
+    const response = await axios(`${API_ENDPOINT}/posts?slug=${slug}`);
+    const product = response.data;
+    return product;
   } catch (error) {
-    return []
-    throw error
+    throw error;
   }
 };
 
 export const createPost = async (data) => {
   try {
-
-    const authorizationHeader = `Basic ${btoa(
-      "diego.gallardo@wpengine.com:OkKL cevd JWVG aBs8 OgGx ukEe"
-    )}`;
-
-    const res = await fetch(`${API_ENDPOINT}/posts`, {
-      method: "POST",
-      headers: {
-        Authorization: authorizationHeader,
-        "Content-Type": "application/json",
+    const response = await axios.post(`${API_ENDPOINT}/posts`, data, {
+      auth: {
+        username: USERNAME,
+        password: PASSWORD,
       },
-      body: JSON.stringify(data),
-
     });
-    console.log(res)
+    return response.data;
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 export const deletePost = async (postID) => {
   try {
-    const authorizationHeader = `Basic ${btoa(
-      "diego.gallardo@wpengine.com:OkKL cevd JWVG aBs8 OgGx ukEe"
-    )}`;
-
-    const res = await fetch(`${API_ENDPOINT}/posts/${postID}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: authorizationHeader,
-      }
+    const response = await axios.delete(`${API_ENDPOINT}/posts/${postID}`, {
+      auth: {
+        username: USERNAME,
+        password: PASSWORD,
+      },
     });
-    console.log(res);
+    console.log(response)
+    return response.data;
   } catch (error) {
     throw error;
   }

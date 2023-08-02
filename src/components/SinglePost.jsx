@@ -31,7 +31,6 @@ export default function SinglePost() {
             <p>{formatDate(post.date)}</p>
             <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
           </div>
-          <button>Edit</button>
           <Link to={"/"}>
             <button
               onClick={() => {
